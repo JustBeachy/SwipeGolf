@@ -27,7 +27,7 @@ public class cameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timer < 1)
+        if (timer < .4f)
             timer += Time.deltaTime;
         else                            //start animation after timer
         {

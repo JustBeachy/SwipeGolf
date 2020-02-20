@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Hole
   - Ball
+  - NoSwipe
+  - Hazard
+  - Bonus
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Ball
   - 
   - 
   - 
