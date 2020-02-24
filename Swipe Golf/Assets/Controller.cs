@@ -9,6 +9,7 @@ public class Controller : MonoBehaviour
     public int swipes, cameraZoom;
     public static int Swipes, CameraZoom;
     public static bool Start=false;
+    public static bool noSwipeZone = false;
     public Text swipesText;
     // Start is called before the first frame update
     void Awake()
@@ -25,7 +26,6 @@ public class Controller : MonoBehaviour
 
     public void RestartRoom()
     {
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

@@ -34,18 +34,18 @@ public class cameraFollow : MonoBehaviour
 
             if (!Controller.Start)
             {
-                Vector3 follow = ((object2follow.transform.position + new Vector3(0, 0, -10)) - cam.transform.position); //camera animation
+                Vector3 follow = ((object2follow.transform.position + new Vector3(0, 2, -10)) - cam.transform.position); //camera animation
                 follow.Normalize();
                 cam.transform.position += follow * Time.deltaTime * 10; //speed
 
-                Vector2 isClose = (object2follow.transform.position - cam.transform.position);
+                Vector2 isClose = (object2follow.transform.position - cam.transform.position+ new Vector3(0,2));
                 if (isClose.magnitude < .1) //if camera animation finished
                     Controller.Start = true; //start round
             }
             else
             {
                 cam.transform.position = object2follow.transform.position; //snap follow object
-                cam.transform.position += new Vector3(0, 0, -10);
+                cam.transform.position += new Vector3(0, 2, -10);
             }
         }
     }

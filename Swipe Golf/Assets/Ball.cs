@@ -9,6 +9,9 @@ public class Ball : MonoBehaviour
     float currentX, currentY, pastX, pastY;
     bool isdown = false;
     bool canSwipe = true;
+    public AudioSource[] hit;
+    public AudioSource intheHole;
+    public GameObject slash;
     
        
     // Start is called before the first frame update
@@ -51,9 +54,12 @@ public class Ball : MonoBehaviour
 
     void SwipeBall()
     {
-        if (Controller.Swipes > 0&&Controller.Start&&canSwipe)
+        if (Controller.Swipes > 0&&Controller.Start&&canSwipe&&!Controller.noSwipeZone)
         {
             Vector2 velocity = new Vector2(currentX - pastX, currentY - pastY);
+
+            var swipeMark = Instantiate(slash, Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10), Quaternion.Euler(0, 0, Mathf.Atan2(currentY - pastY, currentX - pastX) * Mathf.Rad2Deg));
+            swipeMark.transform.localScale = new Vector3(velocity.magnitude/14, 1, 1); //make slash mark and scale it
 
             velocity = Vector2.ClampMagnitude(velocity, 11); //limit max speed
 
@@ -61,6 +67,11 @@ public class Ball : MonoBehaviour
             rb.AddForce(velocity, ForceMode2D.Impulse);
             isdown = false;
             Controller.Swipes--;
+
+            hit[Random.Range(0,hit.Length)].Play();
+            
+
+            
         }
     }
     
@@ -68,7 +79,7 @@ public class Ball : MonoBehaviour
     {
         if (other.gameObject.tag == "Hole")
         {
-            print("in da hole!");
+            intheHole.Play();
             rb.velocity = Vector2.zero;
         }
         if (other.gameObject.tag == "Hazard")
