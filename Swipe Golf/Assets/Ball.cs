@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class Ball : MonoBehaviour
 {
     public Rigidbody2D rb;
@@ -12,12 +13,18 @@ public class Ball : MonoBehaviour
     public AudioSource[] hit;
     public AudioSource intheHole;
     public GameObject slash;
-    
-       
+    bool gotHiddenCoin = false;
+    GameObject controller;
+   
+
+    private void Awake()
+    {
+        
+    }
     // Start is called before the first frame update
     void Start()
     {
-        
+        controller = GameObject.FindGameObjectWithTag("GameController");
     }
 
     // Update is called once per frame
@@ -81,6 +88,9 @@ public class Ball : MonoBehaviour
         {
             intheHole.Play();
             rb.velocity = Vector2.zero;
+            
+            controller.GetComponent<Controller>().NextLevel(true);
+
         }
         if (other.gameObject.tag == "Hazard")
         {
@@ -89,6 +99,11 @@ public class Ball : MonoBehaviour
         if (other.gameObject.tag == "Bonus")
         {
             Controller.Swipes++;
+            Destroy(other.gameObject);
+        }
+        if (other.gameObject.tag == "Coin")
+        {
+            gotHiddenCoin = true;
             Destroy(other.gameObject);
         }
     }
@@ -108,4 +123,10 @@ public class Ball : MonoBehaviour
             canSwipe = true;
         }
     }
+
+    
+
+   
+
+   
 }
