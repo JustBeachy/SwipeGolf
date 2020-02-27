@@ -23,6 +23,11 @@ public class Controller : MonoBehaviour
         Swipes = swipes;
         CameraZoom = cameraZoom;
         Load();
+
+        if(HiddenCoins[SceneManager.GetActiveScene().buildIndex]) //delete hidden coin if already found
+        {
+            GameObject.FindGameObjectWithTag("Coin").SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -36,10 +41,13 @@ public class Controller : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void NextLevel(bool foundCoin)
+    public void NextLevel(bool foundCoin=false)
     {
-        HiddenCoins[SceneManager.GetActiveScene().buildIndex] = foundCoin;
-        Save();
+        if (!HiddenCoins[SceneManager.GetActiveScene().buildIndex]) //if hidden coin wasnt already found
+        
+            HiddenCoins[SceneManager.GetActiveScene().buildIndex] = foundCoin; //save hidden coin
+            Save();
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 

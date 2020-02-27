@@ -13,7 +13,7 @@ public class Ball : MonoBehaviour
     public AudioSource[] hit;
     public AudioSource intheHole;
     public GameObject slash;
-    bool gotHiddenCoin = false;
+    public bool gotHiddenCoin = false;
     GameObject controller;
    
 
@@ -68,7 +68,8 @@ public class Ball : MonoBehaviour
             var swipeMark = Instantiate(slash, Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10), Quaternion.Euler(0, 0, Mathf.Atan2(currentY - pastY, currentX - pastX) * Mathf.Rad2Deg));
             swipeMark.transform.localScale = new Vector3(velocity.magnitude/14, 1, 1); //make slash mark and scale it
 
-            velocity = Vector2.ClampMagnitude(velocity, 11); //limit max speed
+            velocity = velocity / 1.5f;//reduce phyisical swipe sensitivity
+            velocity = Vector2.ClampMagnitude(velocity, 12); //limit max speed
 
             rb.velocity = Vector3.zero;
             rb.AddForce(velocity, ForceMode2D.Impulse);
@@ -89,7 +90,7 @@ public class Ball : MonoBehaviour
             intheHole.Play();
             rb.velocity = Vector2.zero;
             
-            controller.GetComponent<Controller>().NextLevel(true);
+            controller.GetComponent<Controller>().NextLevel(gotHiddenCoin);
 
         }
         if (other.gameObject.tag == "Hazard")

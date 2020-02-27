@@ -65,8 +65,6 @@
     <Compile Include="Assets\Ball.cs" />
     <Compile Include="Assets\cameraFollow.cs" />
     <Compile Include="Assets\Controller.cs" />
-    <Compile Include="Assets\HiddenCoin.cs" />
-    <Compile Include="Assets\Hole.cs" />
     <Compile Include="Assets\NoFingerSwipeZone.cs" />
     <Compile Include="Assets\SlashAnimation.cs" />
     <Compile Include="Assets\Swipeable.cs" />
