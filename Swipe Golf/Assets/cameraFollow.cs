@@ -11,6 +11,8 @@ public class cameraFollow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        
         if (Controller.Start)//don't repeat the cut scene
         {
             object2follow = GameObject.FindGameObjectWithTag("Ball");

@@ -5180,7 +5180,7 @@ MonoBehaviour:
   swipes: 4
   cameraZoom: -20
   swipesText: {fileID: 1699653287}
-  HiddenCoins: 
+  HiddenCoins: 000000000000000000000000000000000000
 --- !u!4 &478312823
 Transform:
   m_ObjectHideFlags: 0

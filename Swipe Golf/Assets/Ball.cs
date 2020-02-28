@@ -25,6 +25,7 @@ public class Ball : MonoBehaviour
     void Start()
     {
         controller = GameObject.FindGameObjectWithTag("GameController");
+        gotHiddenCoin = false;
     }
 
     // Update is called once per frame
@@ -89,6 +90,7 @@ public class Ball : MonoBehaviour
         {
             intheHole.Play();
             rb.velocity = Vector2.zero;
+            Controller.Start = false;
             
             controller.GetComponent<Controller>().NextLevel(gotHiddenCoin);
 

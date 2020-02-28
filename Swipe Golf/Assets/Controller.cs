@@ -13,7 +13,7 @@ public class Controller : MonoBehaviour
     public static bool Start=false;
     public static bool noSwipeZone = false;
     public Text swipesText;
-    public List<bool> HiddenCoins;
+    public bool[] HiddenCoins = new bool[180];
     public static Controller LoadIn = new Controller();
     string path;
     // Start is called before the first frame update
@@ -23,11 +23,13 @@ public class Controller : MonoBehaviour
         Swipes = swipes;
         CameraZoom = cameraZoom;
         Load();
+        
 
         if(HiddenCoins[SceneManager.GetActiveScene().buildIndex]) //delete hidden coin if already found
         {
             GameObject.FindGameObjectWithTag("Coin").SetActive(false);
         }
+        
     }
 
     // Update is called once per frame
@@ -44,10 +46,13 @@ public class Controller : MonoBehaviour
     public void NextLevel(bool foundCoin=false)
     {
         if (!HiddenCoins[SceneManager.GetActiveScene().buildIndex]) //if hidden coin wasnt already found
-        
+        {
             HiddenCoins[SceneManager.GetActiveScene().buildIndex] = foundCoin; //save hidden coin
-            Save();
+        }
+            
         
+        
+        Save();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 

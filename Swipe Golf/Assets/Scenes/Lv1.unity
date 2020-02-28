@@ -5180,7 +5180,7 @@ MonoBehaviour:
   swipes: 2
   cameraZoom: -20
   swipesText: {fileID: 1699653287}
-  HiddenCoins: 0000
+  HiddenCoins: 000000000000000000000000000000000000
 --- !u!4 &478312823
 Transform:
   m_ObjectHideFlags: 0
@@ -5249,7 +5249,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.7254902, g: 0.9607843, b: 1, a: 0}
+  m_BackGroundColor: {r: 0.63372195, g: 0.8570977, b: 0.9528302, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
