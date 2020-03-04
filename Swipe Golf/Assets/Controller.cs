@@ -49,11 +49,14 @@ public class Controller : MonoBehaviour
         {
             HiddenCoins[SceneManager.GetActiveScene().buildIndex] = foundCoin; //save hidden coin
         }
-            
-        
-        
+
+
+        Start = false;
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<cameraFollow>().timer = 0; //reset start and timer to start camera sweep animation
+
         Save();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+
     }
 
     public void Save()
@@ -75,6 +78,8 @@ public class Controller : MonoBehaviour
             JsonUtility.FromJsonOverwrite(loadedString, LoadIn);
             print(loadedString);
             HiddenCoins = LoadIn.HiddenCoins;
+
+            
         }
     }
 

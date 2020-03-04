@@ -68,6 +68,7 @@
     <Compile Include="Assets\NoFingerSwipeZone.cs" />
     <Compile Include="Assets\SlashAnimation.cs" />
     <Compile Include="Assets\Swipeable.cs" />
+    <Compile Include="Assets\Water.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>B:/Games/Swipe Golf/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
