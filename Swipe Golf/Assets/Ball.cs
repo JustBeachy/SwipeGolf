@@ -15,6 +15,8 @@ public class Ball : MonoBehaviour
     public GameObject slash;
     public bool gotHiddenCoin = false;
     GameObject controller;
+    float holeTimer = 0;
+    bool inHole = false;
    
 
     private void Awake()
@@ -32,7 +34,15 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (inHole)
+        {
+            holeTimer += Time.deltaTime;
+            if(holeTimer>.5)
+                controller.GetComponent<Controller>().NextLevel(gotHiddenCoin);
+
+        }
+
+        if (Input.GetMouseButtonDown(0))
         {
             isdown = true;
             firstX = Input.mousePosition.x;
@@ -42,7 +52,7 @@ public class Ball : MonoBehaviour
             GetComponent<LineRenderer>().SetPosition(0, Camera.main.ScreenToWorldPoint(new Vector3(firstX, firstY, 1)));
             GetComponent<LineRenderer>().SetPosition(1, Camera.main.ScreenToWorldPoint(new Vector3(firstX, firstY, 1))); //reset line renderer
         }
-        if(Input.GetMouseButton(0))
+        if(Input.GetMouseButton(0)&&Controller.Swipes>0&&canSwipe)
         {
             pastX = currentX;
             pastY = currentY;
@@ -74,7 +84,7 @@ public class Ball : MonoBehaviour
 
     void SwipeBall()
     {
-        if (Controller.Swipes > 0&&Controller.Start&&canSwipe&&!Controller.noSwipeZone)
+        if (Controller.Swipes > 0&&Controller.start&&canSwipe&&!Controller.noSwipeZone)
         {
             Vector2 velocity = new Vector2(currentX - firstX, currentY - firstY);
 
@@ -122,10 +132,11 @@ public class Ball : MonoBehaviour
         {
             intheHole.Play();
             rb.velocity = Vector2.zero;
-            Controller.Start = false;
-            
-            controller.GetComponent<Controller>().NextLevel(gotHiddenCoin);
+            Controller.start = false;
+            inHole = true;
 
+            if (gotHiddenCoin)
+                Controller.HiddenCoins[SceneManager.GetActiveScene().buildIndex-1] = true;
         }
         if (other.gameObject.tag == "Hazard")
         {
@@ -139,7 +150,9 @@ public class Ball : MonoBehaviour
         if (other.gameObject.tag == "Coin")
         {
             gotHiddenCoin = true;
-            Destroy(other.gameObject);
+            other.gameObject.GetComponent<AudioSource>().Play();
+            other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 

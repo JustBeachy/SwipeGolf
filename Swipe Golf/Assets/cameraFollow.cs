@@ -13,7 +13,7 @@ public class cameraFollow : MonoBehaviour
     {
         
         
-        if (Controller.Start)//don't repeat the cut scene
+        if (Controller.start)//don't repeat the cut scene
         {
             object2follow = GameObject.FindGameObjectWithTag("Ball");
             timer = 100; //fix snap stutter bug
@@ -34,7 +34,7 @@ public class cameraFollow : MonoBehaviour
         else                            //start animation after timer
         {
 
-            if (!Controller.Start)
+            if (!Controller.start)
             {
                 Vector3 follow = ((object2follow.transform.position + new Vector3(0, 2, -10)) - cam.transform.position); //camera animation
                 follow.Normalize();
@@ -42,7 +42,7 @@ public class cameraFollow : MonoBehaviour
 
                 Vector2 isClose = (object2follow.transform.position - cam.transform.position+ new Vector3(0,2));
                 if (isClose.magnitude < .1) //if camera animation finished
-                    Controller.Start = true; //start round
+                    Controller.start = true; //start round
             }
             else
             {

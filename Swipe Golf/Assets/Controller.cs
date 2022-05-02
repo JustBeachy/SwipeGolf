@@ -10,25 +10,26 @@ public class Controller : MonoBehaviour
 {
     public int swipes, cameraZoom;
     public static int Swipes, CameraZoom;
-    public static bool Start=false;
+    public static bool start=false;
     public static bool noSwipeZone = false;
     public Text swipesText;
-    public bool[] HiddenCoins = new bool[180];
+    public static bool[] HiddenCoins;
     public static Controller LoadIn = new Controller();
     string path;
     // Start is called before the first frame update
     void Awake()
     {
+        HiddenCoins = new bool[18];
         path = Application.persistentDataPath + "/SaveFile.json";
         Swipes = swipes;
         CameraZoom = cameraZoom;
-        Load();
+        //Load();
         
 
-        if(HiddenCoins[SceneManager.GetActiveScene().buildIndex]) //delete hidden coin if already found
-        {
-            GameObject.FindGameObjectWithTag("Coin").SetActive(false);
-        }
+      //  if(HiddenCoins[SceneManager.GetActiveScene().buildIndex]) //delete hidden coin if already found
+       // {
+       //     GameObject.FindGameObjectWithTag("Coin").SetActive(false);
+      //  }
         
     }
 
@@ -40,22 +41,46 @@ public class Controller : MonoBehaviour
 
     public void RestartLevel()
     {
+        if(Controller.start)
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void NextLevel(bool foundCoin=false)
     {
-        if (!HiddenCoins[SceneManager.GetActiveScene().buildIndex]) //if hidden coin wasnt already found
-        {
-            HiddenCoins[SceneManager.GetActiveScene().buildIndex] = foundCoin; //save hidden coin
-        }
+       // if (!HiddenCoins[SceneManager.GetActiveScene().buildIndex]) //if hidden coin wasnt already found
+       // {
+      //      HiddenCoins[SceneManager.GetActiveScene().buildIndex] = foundCoin; //save hidden coin
+       // }
+       
 
-
-        Start = false;
+        start = false;
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<cameraFollow>().timer = 0; //reset start and timer to start camera sweep animation
 
-        Save();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+        //Save();
+        if (SceneManager.GetActiveScene().buildIndex == 18)
+        {
+           
+
+            bool gotAllCoins = true;
+            foreach (bool b in HiddenCoins)
+            {
+                
+                if (b == false)
+                {
+                    gotAllCoins = false;
+                    
+                }
+            }
+            if(gotAllCoins)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            else
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
 
     }
 
@@ -77,7 +102,7 @@ public class Controller : MonoBehaviour
             //loadedString = EncryptDecrypt(loadedString, 1337); //comment out for testing -encryption
             JsonUtility.FromJsonOverwrite(loadedString, LoadIn);
             print(loadedString);
-            HiddenCoins = LoadIn.HiddenCoins;
+           // HiddenCoins = LoadIn.HiddenCoins;
 
             
         }
